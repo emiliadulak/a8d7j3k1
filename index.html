@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przelicznik dni kary</title>
+    <style>
+        body {
+            background-color: #f8c7db; /* Pastelowy różowy */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #d16d94;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c0547d;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .result.error {
+            color: red;
+        }
+
+        .result.success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Przelicznik kary</h1>
+    <p>Wprowadź liczbę dni ograniczenia wolności, aby obliczyć równoważne dni pozbawienia wolności:</p>
+    <input type="number" id="restrictionDays" placeholder="Liczba dni ograniczenia wolności" min="1" required step="1">
+    <br>
+    <button onclick="calculate()">Oblicz</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        // Funkcja do obliczeń
+        function calculate() {
+            const restrictionDays = document.getElementById("restrictionDays").value;
+            const resultElement = document.getElementById("result");
+            resultElement.innerText = ""; // Czyszczenie poprzedniego wyniku
+
+            // Walidacja wejścia
+            if (!restrictionDays) {
+                resultElement.innerText = "Proszę wprowadzić liczbę dni.";
+                resultElement.style.color = "red";
+                return;
+            }
+            if (restrictionDays <= 0 || isNaN(restrictionDays)) {
+                resultElement.innerText = "Wartość musi być liczbą dodatnią większą od zera.";
+                resultElement.style.color = "red";
+                return;
+            }
+
+            // Przeliczanie dni pozbawienia wolności
+            const imprisonmentDays = restrictionDays * 3;
+
+            // Wyświetlanie wyniku
+            resultElement.innerText = `${restrictionDays} dni ograniczenia wolności to równoważne ${imprisonmentDays} dni pozbawienia wolności.`;
+            resultElement.style.color = "green";
+        }
+
+        // Obsługa klawisza Enter
+        document.getElementById("restrictionDays").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
